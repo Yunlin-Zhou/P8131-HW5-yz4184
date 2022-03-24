@@ -1,0 +1,87 @@
+---
+title: "P8131-HW5-yz4184"
+author: "Yunlin Zhou"
+date: "3/24/2022"
+output: pdf_document
+---
+```{r, echo = T, message = FALSE, results='hide', warning=FALSE}
+library(tidyverse)
+```
+
+### Import the data
+
+```{r, message = FALSE, results='hide', warning=FALSE}
+crab_df = read.csv("./HW5-crab.txt", sep = "")
+
+para_df = read.csv("./HW5-parasite.txt", sep = "")%>%
+  janitor::clean_names()%>%
+  mutate(area = as.factor(area),
+        year = as.factor(year)) %>%
+  select(year, intensity, length, area)
+```
+
+# Question 1
+
+## (a)
+
+###  Fit a Poisson model (M1) with log link with W as the single predictor.
+
+```{r}
+M1 <- glm(Sa~W, family = poisson(link = log), data=crab_df)
+summary(M1) 
+```
+
+The log rate ration of satellites number would change 0.16405 as carapace width changes 1 unit. The deviance of this model is 567.88 with 171 df. Carapace width is statistically significant.
+
+### goodness of fit
+
+```{r}
+# pearson residual
+P1 = sum(residuals(M1, type = 'pearson')^2)
+p_val1 = 1 - pchisq(P1, df = 171)
+p_val1
+```
+
+Since the p-value of the goodness fit is less than 0.5, we reject the null hypothesis that the M1 is a good fit.
+
+## (b)
+
+###  Fit a model (M2) with W and Wt as predictors.
+
+```{r}
+M2 <- glm(Sa~W+Wt, family = poisson(link = log), data=crab_df)
+summary(M2) 
+```
+
+The log rate ration of satellites number would change 0.04590 as carapace width changes 1 unit; and would change 0.44744 as weight changes 1 unit. The deviance of this model is 559.89 with 170 df. Weight is statistically significant.
+
+### Compare M1 with M2
+
+```{r}
+# analysis of deviance
+D1 = M1$deviance - M2$deviance
+p_val2 = 1 - pchisq(D1, 1)
+p_val2
+```
+
+Since the p-value of the goodness fit is less than 0.5, we reject the null hypothesis that the M1 is better.
+
+
+## (c)
+
+### Check over dispersion in M2.
+
+```{r}
+P2=sum(residuals(M2, type = 'pearson')^2)
+phi=P2/170
+phi
+
+summary(M2, dispersion = phi)
+```
+
+Since phi is 3.156449 which is greater than 1, we can conclude that there is over-dispersion in this model.
+
+After adjusting for over dispersion, the standard error of carapace width changes from 0.04677 to 0.08309; the standard error of weight changes from 0.15864 to 0.28184. 
+
+The log rate ration of satellites number would change 0.04590 as carapace width changes 1 unit; and would change 0.44744 as weight changes 1 unit. The deviance of this model is 559.89 with 170 df. Weight is statistically significant.
+
