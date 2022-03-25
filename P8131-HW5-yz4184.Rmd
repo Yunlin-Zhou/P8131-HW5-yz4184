@@ -6,6 +6,7 @@ output: pdf_document
 ---
 ```{r, echo = T, message = FALSE, results='hide', warning=FALSE}
 library(tidyverse)
+library(pscl)
 ```
 
 ### Import the data
@@ -119,17 +120,17 @@ M3 = glm(intensity ~ area + length + year,
 summary(M3)
 ```
 
-The log rate ratio of intensity would decrease 0.2119557 as area2 increases 1 unit, holding other variables fixed.
+The log rate ratio of intensity would decrease 0.2119557 as the area changes from 1 to 2, holding other variables fixed.
 
-The log rate ratio of intensity would decrease 0.1168602 as area3 increases 1 unit, holding other variables fixed.
+The log rate ratio of intensity would decrease 0.1168602 as the area changes from 1 to 3, holding other variables fixed.
 
-The log rate ratio of intensity would increase 1.4049366 as area4 increases 1 unit, holding other variables fixed.
+The log rate ratio of intensity would increase 1.4049366 as the area changes from 1 to 4, holding other variables fixed.
 
 The log rate ratio of intensity would decrease 0.0284228 as length increases 1 unit, holding other variables fixed.
 
-The log rate ratio of intensity would increase 0.6702801 as year2000 increases 1 unit, holding other variables fixed.
+The log rate ratio of intensity would increase 0.6702801 as the year changes from 1999 to 2000, holding other variables fixed.
 
-The log rate ratio of intensity would decrease 0.2181393 as year2001 increases 1 unit, holding other variables fixed.
+The log rate ratio of intensity would decrease 0.2181393 as the year changes from 1999 to 2001, holding other variables fixed.
 
 ## (b)
 
@@ -146,3 +147,24 @@ Since the p-value of the goodness fit is less than 0.5, we reject the null hypot
 
 ## (C)
 
+### Fit zero-inflated poisson regression model
+
+```{r}
+M4 <- zeroinfl(intensity ~ area + length + year ,
+               data = para_df)
+summary(M4)
+```
+
+### Within the susceptible fish, we use the poisson model:
+
+The log rate ratio of intensity would increase 0.2687838 as the area changes from 1 to 2, holding other variables fixed.
+
+The log rate ratio of intensity would increase 0.1463174 as the area changes from 1 to 3, holding other variables fixed.
+
+The log rate ratio of intensity would increase 0.9448070 as the area changes from 1 to 4, holding other variables fixed.
+
+The log rate ratio of intensity would decrease 0.0368067 as length increases 1 unit, holding other variables fixed.
+
+The log rate ratio of intensity would increase 0.3919828 as the year changes from 1999 to 2000, holding other variables fixed.
+
+The log rate ratio of intensity would decrease 0.0448457  as the year changes from 1999 to 2001, holding other variables fixed.
