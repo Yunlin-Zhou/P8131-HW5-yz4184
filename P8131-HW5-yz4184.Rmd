@@ -168,3 +168,18 @@ The log rate ratio of intensity would decrease 0.0368067 as length increases 1 u
 The log rate ratio of intensity would increase 0.3919828 as the year changes from 1999 to 2000, holding other variables fixed.
 
 The log rate ratio of intensity would decrease 0.0448457  as the year changes from 1999 to 2001, holding other variables fixed.
+
+
+### Since we donot know which fish are susceptible, we assume that all the variables are realted to binomial model.
+
+The log rate ratio of intensity would increase 0.718680 as the area changes from 1 to 2, holding other variables fixed.
+
+The log rate ratio of intensity would increase 0.657710 as the area changes from 1 to 3, holding other variables fixed.
+
+The log rate ratio of intensity would decrease 1.022864 as the area changes from 1 to 4, holding other variables fixed.
+
+The log rate ratio of intensity would decrease 0.009889 as length increases 1 unit, holding other variables fixed.
+
+The log rate ratio of intensity would decrease 0.752121 as the year changes from 1999 to 2000, holding other variables fixed.
+
+The log rate ratio of intensity would increase 0.456533  as the year changes from 1999 to 2001, holding other variables fixed.
